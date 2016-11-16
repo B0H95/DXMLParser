@@ -1,5 +1,6 @@
 import std.stdio;
 import b0h.xml.lexer;
+import b0h.xml.parser;
 
 void main(string[] args)
 {
@@ -11,9 +12,15 @@ void main(string[] args)
 
 	auto tokenqueue = lexer.GetTokenQueue();
 
-	while (tokenqueue.Length > 0)
+	XMLParser parser = new XMLParser();
+	parser.ParseTokenQueue(tokenqueue);
+
+	auto elementqueue = parser.GetElementQueue();
+
+	typeof(elementqueue.Pull()) element;
+	while ((element = elementqueue.Pull()).IsValid())
 	{
-		write(tokenqueue.Pull().ToString() ~ "|");
+		write("#" ~ element.ToString() ~ "#");
 	}
 	writeln("");
 }

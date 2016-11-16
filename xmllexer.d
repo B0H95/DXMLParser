@@ -7,7 +7,7 @@ import std.stdio;
 import std.uni;
 import std.conv;
 
-class XMLLexer
+class XMLLexer //TODO: Support for comments
 {
 public:
 	this()
@@ -64,9 +64,9 @@ private:
 				}
 				else
 				{
-					currentcitation = "";
 					citations = false;
-					tokenQueue.Push(new XMLToken(currentelement));
+					tokenQueue.Push(new XMLToken(currentcitation ~ currentelement ~ currentcitation));
+					currentcitation = "";
 					currentelement = "";
 					continue;
 				}

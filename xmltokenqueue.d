@@ -1,7 +1,7 @@
 module b0h.xml.tokenqueue;
 
 import b0h.xml.token;
-import std.stdio;
+
 class XMLTokenQueue
 {
 public:
