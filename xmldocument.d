@@ -6,42 +6,42 @@ import b0h.xml.node;
 class XMLDocument
 {
 public:
-	this()
-	{
-		root = new XMLNode("root", null, null, false);
-		currentnode = root;
-	}
+    this()
+    {
+	root = new XMLNode("root", null, null, false);
+	currentnode = root;
+    }
 
-	void OnStartTag(string name, XMLAttributeList params, bool isterminating)
+    void OnStartTag(string name, XMLAttributeList params, bool isterminating)
+    {
+	XMLNode newnode = new XMLNode(name, params, currentnode, isterminating);
+	currentnode.AddNode(newnode);
+	if (!isterminating)
 	{
-		XMLNode newnode = new XMLNode(name, params, currentnode, isterminating);
-		currentnode.AddNode(newnode);
-		if (!isterminating)
-		{
-			currentnode = newnode;
-		}
+	    currentnode = newnode;
+	}
 		
-	}
+    }
 
-	void OnEndTag(string name)
+    void OnEndTag(string name)
+    {
+	if (currentnode.GetPrevious() !is null)
 	{
-		if (currentnode.GetPrevious() !is null)
-		{
-			currentnode = currentnode.GetPrevious();
-		}
+	    currentnode = currentnode.GetPrevious();
 	}
+    }
 
-	void OnText(string text)
-	{
-		currentnode.AddText(text);
-	}
+    void OnText(string text)
+    {
+	currentnode.AddText(text);
+    }
 
-	string ToString()
-	{
-		return root.ToString("");
-	}
+    string ToString()
+    {
+	return root.ToString("");
+    }
 
 private:
-	XMLNode root;
-	XMLNode currentnode;
+    XMLNode root;
+    XMLNode currentnode;
 }

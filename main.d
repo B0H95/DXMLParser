@@ -6,27 +6,27 @@ import b0h.xml.document;
 
 void main(string[] args)
 {
-	/*XMLLexer lexer = new XMLLexer();
-	if (!lexer.LoadAndParseFile("testxml.xml"))
-	{
-		writeln("Could not find testxml.xml");
-	}
+    /*XMLLexer lexer = new XMLLexer();
+      if (!lexer.LoadAndParseFile("testxml.xml"))
+      {
+      writeln("Could not find testxml.xml");
+      }
 
-	auto tokenqueue = lexer.GetTokenQueue();
+      auto tokenqueue = lexer.GetTokenQueue();
 
-	XMLParser parser = new XMLParser();
-	parser.ParseTokenQueue(tokenqueue);
+      XMLParser parser = new XMLParser();
+      parser.ParseTokenQueue(tokenqueue);
 
-	auto elementqueue = parser.GetElementQueue();
+      auto elementqueue = parser.GetElementQueue();
 
-	typeof(elementqueue.Pull()) element;
-	while ((element = elementqueue.Pull()).IsValid())
-	{
-		write("#" ~ element.ToString() ~ "#");
-	}
-	writeln("");*/
+      typeof(elementqueue.Pull()) element;
+      while ((element = elementqueue.Pull()).IsValid())
+      {
+      write("#" ~ element.ToString() ~ "#");
+      }
+      writeln("");*/
 
-	XMLDocumentBuilder builder = new XMLDocumentBuilder();
-	XMLDocument xmldoc = builder.Build("testxml.xml");
-	writeln(xmldoc.ToString());
+    XMLDocumentBuilder builder = new XMLDocumentBuilder();
+    XMLDocument xmldoc = builder.Build("testxml.xml");
+    writeln(xmldoc.ToString());
 }

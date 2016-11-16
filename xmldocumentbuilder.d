@@ -7,53 +7,53 @@ import b0h.xml.parser;
 class XMLDocumentBuilder
 {
 public:
-	this()
-	{
-	}
+    this()
+    {
+    }
 	
-	XMLDocument Build(string filename)
+    XMLDocument Build(string filename)
+    {
+	try
 	{
-		try
+	    XMLLexer lexer = new XMLLexer();
+	    if (!lexer.LoadAndParseFile(filename))
+	    {
+		throw new Exception("Could not build XMLDocument out of " ~ filename);
+		return null;
+	    }
+
+	    auto tokenqueue = lexer.GetTokenQueue();
+
+	    XMLParser parser = new XMLParser();
+	    parser.ParseTokenQueue(tokenqueue);
+
+	    auto elementqueue = parser.GetElementQueue();
+
+	    XMLDocument returndoc = new XMLDocument();
+	    typeof(elementqueue.Pull()) element;
+	    while ((element = elementqueue.Pull()).IsValid())
+	    {
+		if (element.IsStartTag())
 		{
-			XMLLexer lexer = new XMLLexer();
-			if (!lexer.LoadAndParseFile(filename))
-			{
-				throw new Exception("Could not build XMLDocument out of " ~ filename);
-				return null;
-			}
-
-			auto tokenqueue = lexer.GetTokenQueue();
-
-			XMLParser parser = new XMLParser();
-			parser.ParseTokenQueue(tokenqueue);
-
-			auto elementqueue = parser.GetElementQueue();
-
-			XMLDocument returndoc = new XMLDocument();
-			typeof(elementqueue.Pull()) element;
-			while ((element = elementqueue.Pull()).IsValid())
-			{
-				if (element.IsStartTag())
-				{
-					returndoc.OnStartTag(element.GetName(), element.GetAttributeList(), element.IsTerminating());
-				}
-				else if (element.IsEndTag())
-				{
-					returndoc.OnEndTag(element.GetName());
-				}
-				else if (element.IsText())
-				{
-					returndoc.OnText(element.GetText());
-				}
-			}
-			return returndoc;
+		    returndoc.OnStartTag(element.GetName(), element.GetAttributeList(), element.IsTerminating());
 		}
-		catch (Exception e)
+		else if (element.IsEndTag())
 		{
-			throw new Exception("Could not build XMLDocument out of " ~ filename);
-			return null;
+		    returndoc.OnEndTag(element.GetName());
 		}
-	}	
+		else if (element.IsText())
+		{
+		    returndoc.OnText(element.GetText());
+		}
+	    }
+	    return returndoc;
+	}
+	catch (Exception e)
+	{
+	    throw new Exception("Could not build XMLDocument out of " ~ filename);
+	    return null;
+	}
+    }	
 
 private:
 }
