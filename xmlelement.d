@@ -99,6 +99,11 @@ public:
 	{
 		return attributeList;
 	}
+
+	bool IsTerminating()
+	{
+		return terminating;
+	}
 private:
 	XMLAttributeList attributeList;
 	string name;

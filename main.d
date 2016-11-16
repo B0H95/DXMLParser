@@ -1,10 +1,12 @@
 import std.stdio;
-import b0h.xml.lexer;
-import b0h.xml.parser;
+//import b0h.xml.lexer;
+//import b0h.xml.parser;
+import b0h.xml.documentbuilder;
+import b0h.xml.document;
 
 void main(string[] args)
 {
-	XMLLexer lexer = new XMLLexer();
+	/*XMLLexer lexer = new XMLLexer();
 	if (!lexer.LoadAndParseFile("testxml.xml"))
 	{
 		writeln("Could not find testxml.xml");
@@ -22,5 +24,9 @@ void main(string[] args)
 	{
 		write("#" ~ element.ToString() ~ "#");
 	}
-	writeln("");
+	writeln("");*/
+
+	XMLDocumentBuilder builder = new XMLDocumentBuilder();
+	XMLDocument xmldoc = builder.Build("testxml.xml");
+	writeln(xmldoc.ToString());
 }

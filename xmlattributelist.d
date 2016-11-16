@@ -26,9 +26,9 @@ public:
 		for (ulong i = 0; i < attributeList.length; i += 2)
 		{
 			returnstr ~= attributeList[i];
-			returnstr ~= "=";
+			returnstr ~= "=\"'";
 			returnstr ~= attributeList[i+1];
-			returnstr ~= " ";
+			returnstr ~= "'\" ";
 		}
 		return returnstr;
 	}
