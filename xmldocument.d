@@ -8,7 +8,7 @@ class XMLDocument
 public:
     this()
     {
-	root = new XMLNode("root", null, null, false);
+	root = new XMLNode();
 	currentnode = root;
     }
 
@@ -25,9 +25,9 @@ public:
 
     void OnEndTag(string name)
     {
-	if (currentnode.GetPrevious() !is null)
+	if (currentnode.GetParent() !is null)
 	{
-	    currentnode = currentnode.GetPrevious();
+	    currentnode = currentnode.GetParent();
 	}
     }
 
@@ -38,7 +38,22 @@ public:
 
     string ToString()
     {
-	return root.ToString("");
+	string returnstr;
+	XMLNode[] childs = root.GetChilds();
+	for (ulong i = 0; i < childs.length; ++i)
+	{
+	    returnstr ~= childs[i].ToString("");
+	}
+	return returnstr;
+    }
+
+    XMLNode GetRoot()
+    {
+	if (root.GetChilds().length > 0)
+	{
+	    return root.GetChilds()[0];
+	}
+	return null;
     }
 
 private:

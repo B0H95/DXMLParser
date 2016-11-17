@@ -33,6 +33,18 @@ public:
 	return returnstr;
     }
 
+    string GetAttribute(string attrname)
+    {
+	for (ulong i = 0; i < attributeList.length; i += 2)
+	{
+	    if (attributeList[i] == attrname)
+	    {
+		return attributeList[i+1];
+	    }
+	}
+	return null;
+    }
+
 private:
     string[] attributeList;
 }
